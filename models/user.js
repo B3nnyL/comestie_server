@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var ErrorHandler = require('.../util/error_handler');
+var ErrorHandler = require('../util/error_handler');
 
 mongoose.Promise = global.Promise;
 
@@ -47,3 +47,4 @@ exports.put = function(id, object) {
         }, error => reject(ErrorHandler(error)));
     })
 }
+
