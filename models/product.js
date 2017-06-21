@@ -21,8 +21,12 @@ var Product = mongoose.model('product', {
     LastingPeriod: String
 })
 
-exports.get = function () {
-    return Product.find();
+exports.get = function() {
+    return new Promise((resolve, reject) => {
+        Product.find()
+    }).then(product => {
+        resolve(product);
+    }, error => reject(ErrorHandler(error)));   
 }
 
 exports.post = function(object) {

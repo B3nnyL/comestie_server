@@ -1,21 +1,39 @@
 var Product = require('../models/product');
+var User = require('../models/user');
 
-module.exports = function(app) {
-    app.get('/products', function(req, res) {
+module.exports = function (app) {
+    app.get('/products', function (req, res) {
         Product.get()
-        .then(products =>  res.json(products), error => res.status(400).send(error))
+        .then(products => res.json(products), error => res.status(400).send(error))
     });
 
-    app.post('/product', function(req, res) {
+    app.post('/product', function (req, res) {
         Product.post(req.body)
         .then(product => res.json(product), error => res.status(400).send(error))
     });
 
-    app.put('/product/:id', function(req, res) {
-        Product.put(req.body(id), req.body)
+    app.put('/product/:id', function (req, res) {
+        Product.put(req.param('id'), req.body)
         .then(product => res.json(product), error => res.status(400).send(error))
     });
 
-  
-    
+    app.delete('/product/:id', function (req, res) {
+        Product.delete(req.param('id'), req.body)
+        .then(() => res.send(), error => res.status(400).send(error))
+    });
+
+    app.get('/user/:id', function(req, res) {
+        User.get(req.param('id')
+        .then(user => res.json(user), error => res.status(400).send(error)))
+    });
+
+    app.post('/user', function (req, res){
+        User.post(req.body)
+        .then(user => res.json(user), error => res.status(400).send(error))
+    });
+
+    app.put('/user/:id', function (req, res){
+        User.put(req.param('id', req.body)
+        .then(user => user.json(user), error => res.status(400).send(error)))
+    });
 }
