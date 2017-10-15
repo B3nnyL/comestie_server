@@ -3,52 +3,44 @@ var ErrorHandler = require('../util/error_handler');
 
 mongoose.Promise = global.Promise;
 
-var Product = mongoose.model('product', {
+var Brand = mongoose.model('Brand', {
     name: {
         type: String,
         require: true
-    },
-    brand: String,
-    type: String,
-    purchaseDate: {
-        type: String,
-        require: true
-    },
-    openJarDate: String,
-    LastingPeriod: String
+    }
 })
 
 exports.get = function() {
     return new Promise((resolve, reject) => {
-        Product.find()
-    }).then(product => {
-        resolve(product);
+        Brand.find()
+    }).then(Brand => {
+        resolve(Brand);
     }, error => reject(ErrorHandler(error)));   
 }
 
 exports.post = function(object) {
-    var newProduct = new Product(object);
+    var newBrand = new Brand(object);
     return new Promise((resolve, reject) => {
-        newProduct.save().then(newProduct), error => reject(ErrorHandler(error));
+        newBrand.save().then(newBrand), error => reject(ErrorHandler(error));
     })
 }
 
 exports.put = function(id, object) {
     return new Promise((resolve, reject) => {
-        Product.findOneAndUpdate({
+        Brand.findOneAndUpdate({
             _id: id
         }, {
             $set: object
         }, {
             new: true
-        }). then(product => {
-            resolve(product);
+        }). then(Brand => {
+            resolve(Brand);
         }, error => reject(ErrorHandler(error)));
     })
 }
 
 exports.delete = function(id) {
-    return Product.findByIdAndRemove({
+    return Brand.findByIdAndRemove({
         _id: id
     });
 }

@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 var database = require('./config/db.js');
 var cookieParser = require('cookie-parser');
 
-mongoose.connect(database.url);
+mongoose.connect(database.url, {useMongoClient: true});
 
 var app = express();
 app.use(bodyParser.urlencoded({

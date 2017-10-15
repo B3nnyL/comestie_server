@@ -1,5 +1,6 @@
 var Product = require('../models/product');
 var User = require('../models/user');
+var Brand = require('../models/brand');
 
 module.exports = function (app) {
     app.get('/products', function (req, res) {
@@ -21,6 +22,27 @@ module.exports = function (app) {
         Product.delete(req.param('id'), req.body)
         .then(() => res.send(), error => res.status(400).send(error))
     });
+
+    app.get('/brands'), function (req, res) {
+        Brand.get()
+        .then(brands => res.json(brands), error => res.status(400).send(error))
+    }
+
+    app.post('/brand'), function (req, res) {
+        Brand.post(req.body)
+        .then(brand => res.json(brand), error => res.status(400).send(error))
+    }
+
+    app.put('/brand/:id'), function (req, res) {
+        Brand.post(req.param('id'), req.body)
+        .then(product => res.json(product), error => res.status(400).send(error))
+    }
+
+    app.delete('brand/:id'), function (req, res) {
+        Brand.delete(req.param('id'))
+        .then(() => res.send(), error => res.status(400).send(error))
+    }
+
 
     app.get('/user/:id', function(req, res) {
         User.get(req.param('id')
