@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema
 var ErrorHandler = require('../util/error_handler');
 
 mongoose.Promise = global.Promise;
@@ -25,30 +26,30 @@ var Product = mongoose.model('products', {
 })
 
 exports.list = function() {
-    return new Promise((resolve, reject) => {
+    return new Promise((res, rej) => {
         Product.find()
     }).then(product => {
-        resolve(product);
-    }, error => reject(ErrorHandler(error)));   
+        res(product);
+    }, error => rej(ErrorHandler(error)));   
 }
 
 exports.get = function(id) {
-    return new Promise((resolve, reject) => {
+    return new Promise((res, rej) => {
         Product.findOne(id)
     }).then(product => {
-        resolve(product);
-    }, error => reject(ErrorHandler(error)));   
+        res(product);
+    }, error => rej(ErrorHandler(error)));   
 }
 
 exports.post = function(object) {
     var newProduct = new Product(object);
-    return new Promise((resolve, reject) => {
-        newProduct.save().then(newProduct), error => reject(ErrorHandler(error));
+    return new Promise((res, rej) => {
+        newProduct.save().then(newProduct), error => rej(ErrorHandler(error));
     })
 }
 
 exports.put = function(id, object) {
-    return new Promise((resolve, reject) => {
+    return new Promise((res, rej) => {
         Product.findOneAndUpdate({
             _id: id
         }, {
@@ -56,8 +57,8 @@ exports.put = function(id, object) {
         }, {
             new: true
         }). then(product => {
-            resolve(product);
-        }, error => reject(ErrorHandler(error)));
+            res(product);
+        }, error => rej(ErrorHandler(error)));
     })
 }
 

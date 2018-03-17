@@ -4,7 +4,7 @@ var Brand = require('../models/brand');
 
 module.exports = function (app) {
     app.get('/', function (req,res) {
-        console.log(res)
+        console.log('lo')
     });
 
     app.get('/products', function (req, res) {

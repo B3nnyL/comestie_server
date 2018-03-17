@@ -17,25 +17,25 @@ var User = mongoose.model('user', {
 })
 
 exports.get = function(id) {
-    return  new Promise((resolve, reject) => {
+    return  new Promise((res, rej) => {
         User.find({
             _id: id
         }).then(user => {
-            resolve(user);
-        }, error => reject(ErrorHandler(error)));
+            res(user);
+        }, error => rej(ErrorHandler(error)));
     
     })
 }
 
 exports.post = function(object) {
     var newUser = new User(object);
-    return new Promise((resolve, reject) => {
-        newUser.save().then(newUser), error => reject(ErrorHandler(error));
+    return new Promise((res, rej) => {
+        newUser.save().then(newUser), error => rej(ErrorHandler(error));
     })
 }
 
 exports.put = function(id, object) {
-    return new Promise((resolve, reject) => {
+    return new Promise((res, rej) => {
         User.findOneAndUpdate({
             _id: id
         }, {
@@ -43,8 +43,8 @@ exports.put = function(id, object) {
         }, {
             new: true
         }). then(user => {
-            resolve(user);
-        }, error => reject(ErrorHandler(error)));
+            res(user);
+        }, error => rej(ErrorHandler(error)));
     })
 }
 

@@ -11,30 +11,30 @@ var Brand = mongoose.model('brands', {
 })
 
 exports.list = function() {
-    return new Promise((resolve, reject) => {
+    return new Promise((res, rej) => {
         Brand.find()
     }).then(Brand => {
-        resolve(Brand);
-    }, error => reject(ErrorHandler(error)));   
+        res(Brand);
+    }, error => rej(ErrorHandler(error)));   
 }
 
 exports.get = function(id) {
-    return new Promise((resolve, reject) => {
+    return new Promise((res, rej) => {
         Brand.findOne(id)
     }).then(Brand => {
-        resolve(Brand);
-    }, error => reject(ErrorHandler(error)));   
+        res(Brand);
+    }, error => rej(ErrorHandler(error)));   
 }
 
 exports.post = function(object) {
     var newBrand = new Brand(object);
-    return new Promise((resolve, reject) => {
-        newBrand.save().then(newBrand), error => reject(ErrorHandler(error));
+    return new Promise((res, rej) => {
+        newBrand.save().then(newBrand), error => rej(ErrorHandler(error));
     })
 }
 
 exports.put = function(id, object) {
-    return new Promise((resolve, reject) => {
+    return new Promise((res, rej) => {
         Brand.findOneAndUpdate({
             _id: id
         }, {
@@ -42,8 +42,8 @@ exports.put = function(id, object) {
         }, {
             new: true
         }). then(Brand => {
-            resolve(Brand);
-        }, error => reject(ErrorHandler(error)));
+            res(Brand);
+        }, error => rej(ErrorHandler(error)));
     })
 }
 

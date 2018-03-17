@@ -11,32 +11,32 @@ var Category = monogoose.model('category',{
 })
 
 exports.list = function(){
-  return new Promise((resolve, reject) => {
+  return new Promise((res, rej) => {
     Category.find()})
-    .then(Categories => {resolve(Category);}, error => {reject(errorHandler(error));})
+    .then(Categories => {res(Category);}, error => {rej(errorHandler(error));})
   }
 
 exports.post = function(object){
   var newCategory = new Category(object);
-  return new Promise((resolve, reject) => {
-    Category.save().then(newCategory), error => {reject(errorHandler(error));}})
+  return new Promise((res, rej) => {
+    Category.save().then(newCategory), error => {rej(errorHandler(error));}})
 }
 
 exports.get = function(id){
-  return new Promise((resolve, reject) => {
+  return new Promise((res, rej) => {
     Category.findById(id)
-    .then(Category => {resolve(Category), error => {reject(errorHandler(error));}})
+    .then(Category => {res(Category), error => {rej(errorHandler(error));}})
   })
 }
 
 exports.update = function(id, object){
-  return new Promise((resolve, reject) => {
-    Category.findByIdAndUpdate(id, object).then(updatedCategory), error => {reject(errorHandler(error));}
+  return new Promise((res, rej) => {
+    Category.findByIdAndUpdate(id, object).then(updatedCategory), error => {rej(errorHandler(error));}
   })
 }
 
 exports.delete = function(id){
-  return new Promise((resolve, reject) => {
-    Category.findByIdAndRemove(id).then(console.log("Deleted!" + category), error => {reject(errorHandler(error));})
+  return new Promise((res, rej) => {
+    Category.findByIdAndRemove(id).then(console.log("Deleted!" + category), error => {rej(errorHandler(error));})
   })
 }
