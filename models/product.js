@@ -32,7 +32,7 @@ exports.list = function() {
     }, error => reject(ErrorHandler(error)));   
 }
 
-exports.list = function(id) {
+exports.get = function(id) {
     return new Promise((resolve, reject) => {
         Product.findOne(id)
     }).then(product => {

@@ -8,7 +8,12 @@ module.exports = function (app) {
     });
 
     app.get('/products', function (req, res) {
-        Product.get()
+        Product.list()
+        .then(product => res.json(product), error => res.status(400).send(error))
+    });
+
+    app.get('/products/:id', function (req, res) {
+        Product.get(req.param('id'))
         .then(product => res.json(product), error => res.status(400).send(error))
     });
 
