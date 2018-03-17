@@ -33,7 +33,12 @@ module.exports = function (app) {
     });
 
     app.get('/brands'), function (req, res) {
-        Brand.get()
+        Brand.list()
+        .then(brands => res.json(brands), error => res.status(400).send(error))
+    }
+
+    app.get('/brand/:id'), function (req, res) {
+        Brand.get(req.param('id'))
         .then(brands => res.json(brands), error => res.status(400).send(error))
     }
 

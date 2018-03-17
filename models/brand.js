@@ -10,9 +10,17 @@ var Brand = mongoose.model('brands', {
     }
 })
 
-exports.get = function() {
+exports.list = function() {
     return new Promise((resolve, reject) => {
         Brand.find()
+    }).then(Brand => {
+        resolve(Brand);
+    }, error => reject(ErrorHandler(error)));   
+}
+
+exports.get = function(id) {
+    return new Promise((resolve, reject) => {
+        Brand.findOne(id)
     }).then(Brand => {
         resolve(Brand);
     }, error => reject(ErrorHandler(error)));   
