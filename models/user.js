@@ -3,7 +3,7 @@ var ErrorHandler = require('../util/error_handler');
 
 mongoose.Promise = global.Promise;
 
-var User = mongoose.model('project', {
+var User = mongoose.model('user', {
     name: {
         type: String,
         require: true

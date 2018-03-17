@@ -3,9 +3,13 @@ var User = require('../models/user');
 var Brand = require('../models/brand');
 
 module.exports = function (app) {
+    app.get('/', function (req,res) {
+        console.log(res)
+    });
+
     app.get('/products', function (req, res) {
         Product.get()
-        .then(products => res.json(products), error => res.status(400).send(error))
+        .then(product => res.json(product), error => res.status(400).send(error))
     });
 
     app.post('/product', function (req, res) {
