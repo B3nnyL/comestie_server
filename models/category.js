@@ -3,40 +3,46 @@ var errorHandler = require('../util/error_handler');
 
 monogoose.Promise = global.Promise;
 
-var Category = monogoose.model('category',{
+var Category = monogoose.model('categories',{
   name: {
     type: String,
-    require: true
+    required: true
   }
 })
 
-exports.list = function(){
+exports.list = function() {
   return new Promise((res, rej) => {
-    Category.find()})
-    .then(Categories => {res(Category);}, error => {rej(errorHandler(error));})
-  }
-
-exports.post = function(object){
-  var newCategory = new Category(object);
-  return new Promise((res, rej) => {
-    Category.save().then(newCategory), error => {rej(errorHandler(error));}})
+    Category.find({})
+    .then(category => res(category), error => rej(error))
+  });
 }
 
-exports.get = function(id){
+exports.get = function(id) {
   return new Promise((res, rej) => {
     Category.findById(id)
-    .then(Category => {res(Category), error => {rej(errorHandler(error));}})
+    .then(category => res(category), error => rej(error))
+  });
+}
+
+exports.add = function(object) {
+  var newCategory = new Category(object)
+  return new Promise((res, rej) => {
+    newCategory.save()
+    .then(category => res(category), error => rej(error))
+  });
+}
+
+exports.update = function(id, object) {
+  return new Promise((res, rej) => {
+      Category.findByIdAndUpdate(id, object)
+      .then(category => res(category), error => rej(error))
+  });
+}
+
+exports.delete = function(id) {
+  return new Promise((res, rej) => {
+      Category.findByIdAndRemove(id)
+      .then(category => res(category), error => rej(error))
   })
 }
 
-exports.update = function(id, object){
-  return new Promise((res, rej) => {
-    Category.findByIdAndUpdate(id, object).then(updatedCategory), error => {rej(errorHandler(error));}
-  })
-}
-
-exports.delete = function(id){
-  return new Promise((res, rej) => {
-    Category.findByIdAndRemove(id).then(console.log("Deleted!" + category), error => {rej(errorHandler(error));})
-  })
-}

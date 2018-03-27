@@ -1,54 +1,45 @@
 var mongoose = require('mongoose');
-var ErrorHandler = require('../util/error_handler');
-
-mongoose.Promise = global.Promise;
 
 var Brand = mongoose.model('brands', {
     name: {
         type: String,
-        require: true
+        required: true
     }
 })
 
+exports.add = function(object) {
+    var newBrand = Brand(object);
+    return new Promise((res, rej) => {
+        newBrand.save()
+        .then(brand => res(brand), error => rej(error))
+    });
+}
+
 exports.list = function() {
     return new Promise((res, rej) => {
-        Brand.find()
-    }).then(Brand => {
-        res(Brand);
-    }, error => rej(ErrorHandler(error)));   
+        Brand.find({})
+        .then(brand => res(brand), error => rej(error))
+    });
 }
 
 exports.get = function(id) {
-    return new Promise((res, rej) => {
-        Brand.findOne(id)
-    }).then(Brand => {
-        res(Brand);
-    }, error => rej(ErrorHandler(error)));   
+    return new Promise((res, rej) =>{
+        Brand.findById(id)
+        .then(brand => res(brand), error => rej(error))
+    });
+
 }
 
-exports.post = function(object) {
-    var newBrand = new Brand(object);
+exports.update = function(id, object) {
     return new Promise((res, rej) => {
-        newBrand.save().then(newBrand), error => rej(ErrorHandler(error));
-    })
-}
-
-exports.put = function(id, object) {
-    return new Promise((res, rej) => {
-        Brand.findOneAndUpdate({
-            _id: id
-        }, {
-            $set: object
-        }, {
-            new: true
-        }). then(Brand => {
-            res(Brand);
-        }, error => rej(ErrorHandler(error)));
-    })
+        Brand.findByIdAndUpdate(id, object)
+        .then(brand => res(brand), error => rej(error))
+    });
 }
 
 exports.delete = function(id) {
-    return Brand.findByIdAndRemove({
-        _id: id
-    });
+    return new Promise((res, rej) => {
+        Brand.findByIdAndRemove(id)
+        .then(brand => res(brand), error => rej(error))
+    })
 }

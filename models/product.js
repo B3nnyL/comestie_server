@@ -10,7 +10,7 @@ var Product = mongoose.model('products', {
         required: true
     },
     brand: [{type: Schema.Types.ObjectId, ref: 'brand'}],
-    category: [{type: Schema.Types.ObjectId, ref: 'category'}],
+    product: [{type: Schema.Types.ObjectId, ref: 'product'}],
     openJarDate: {
         type: Date,
         required: false
@@ -27,43 +27,36 @@ var Product = mongoose.model('products', {
 
 exports.list = function() {
     return new Promise((res, rej) => {
-        Product.find()
-    }).then(product => {
-        res(product);
-    }, error => rej(ErrorHandler(error)));   
-}
-
-exports.get = function(id) {
-    return new Promise((res, rej) => {
-        Product.findOne(id)
-    }).then(product => {
-        res(product);
-    }, error => rej(ErrorHandler(error)));   
-}
-
-exports.post = function(object) {
-    var newProduct = new Product(object);
-    return new Promise((res, rej) => {
-        newProduct.save().then(newProduct), error => rej(ErrorHandler(error));
-    })
-}
-
-exports.put = function(id, object) {
-    return new Promise((res, rej) => {
-        Product.findOneAndUpdate({
-            _id: id
-        }, {
-            $set: object
-        }, {
-            new: true
-        }). then(product => {
-            res(product);
-        }, error => rej(ErrorHandler(error)));
-    })
-}
-
-exports.delete = function(id) {
-    return Product.findByIdAndRemove({
-        _id: id
+      Product.find({})
+      .then(Product => res(Product), error => rej(error))
     });
-}
+  }
+  
+  exports.get = function(id) {
+    return new Promise((res, rej) => {
+      Product.findById(id)
+      .then(product => res(product), error => rej(error))
+    });
+  }
+  
+  exports.add = function(object) {
+    var newCategory = new Product(object)
+    return new Promise((res, rej) => {
+      newCategory.save()
+      .then(product => res(product), error => rej(error))
+    });
+  }
+  
+  exports.update = function(id, object) {
+    return new Promise((res, rej) => {
+        Product.findByIdAndUpdate(id, object)
+        .then(product => res(product), error => rej(error))
+    });
+  }
+  
+  exports.delete = function(id) {
+    return new Promise((res, rej) => {
+        Product.findByIdAndRemove(id)
+        .then(product => res(product), error => rej(error))
+    })
+  }
