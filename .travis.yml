@@ -1,0 +1,35 @@
+os:
+  - linux
+services:
+  - docker
+
+language: node_js
+node_js:
+  - "9.8.0"
+
+branches:
+  only:
+    - master
+
+cache:
+  directories:
+    - node_modules
+
+before_script:
+  - npm i -g npm
+  - npm install -g jasmine-node
+
+script:
+  - npm install
+  - npm test
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: "9faa9a11-6df7-4967-b387-8dc9cdc23302"
+  app: cosmetie-node
+
+notifications:
+  email:
+    on_failure: change
+    on_success: change
